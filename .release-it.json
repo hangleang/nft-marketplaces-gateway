@@ -1,0 +1,24 @@
+{
+  "git": {
+    "commitMessage": "chore: release v${version}"
+  },
+  "github": {
+    "release": true
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": "angular",
+      "infile": "CHANGELOG.md"
+    },
+    "@csmith/release-it-calver-plugin": {
+      "format": "yyyy.mm.minor",
+      "increment": "calendar"
+    }
+  },
+  "hooks": {
+    "before:init": ["yarn validate"],
+    "after:bump": "yarn build",
+    "after:git:release": "echo After git push, before github release",
+    "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
+  }
+}

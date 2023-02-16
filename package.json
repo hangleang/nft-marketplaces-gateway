@@ -1,0 +1,35 @@
+{
+  "name": "graphql-mesh",
+  "version": "0.0.1",
+  "private": "true",
+  "description": "testing graphql-mesh",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "mesh build",
+    "commit": "git-cz",
+    "dev": "mesh dev",
+    "start": "mesh start",
+    "validate": "mesh validate",
+    "release": "release-it",
+    "postinstall": "husky install"
+  },
+  "dependencies": {
+    "@graphql-mesh/graphql": "^0.34.5",
+    "@graphql-mesh/json-schema": "^0.37.14",
+    "@graphql-mesh/runtime": "^0.46.13",
+    "@graphql-mesh/transform-filter-schema": "^0.15.15",
+    "graphql": "^16.6.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.3",
+    "@commitlint/config-conventional": "^17.4.3",
+    "@csmith/release-it-calver-plugin": "^2022.12.15",
+    "@graphql-mesh/cli": "^0.82.21",
+    "@release-it/conventional-changelog": "^5.1.1",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^8.0.3",
+    "release-it": "^15.6.0"
+  }
+}
