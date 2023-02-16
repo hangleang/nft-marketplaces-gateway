@@ -8,24 +8,19 @@
   },
   "rules": [
     {
-      "message": "You’ve got conflict markers laying around",
-      "regex": "/^[<>|=]{4,}/m"
-    },
-    {
-      "message":
-        "Hold off the commit! You left things in explicitly marked as non-committable",
-      "regex": "/do not commit/i"
-    },
-    {
-      "message": "Looks like you still have some work to do?",
-      "nonBlocking": true,
-      "regex": "/(?:FIXME|TODO)/"
-    },
-    {
       "filter": "\\.js$",
       "nonBlocking": "true",
       "message": "You’ve got leftover `console.log`",
       "regex": "console\\.log"
+    },
+    {
+      "message": "You’ve got leftover conflict markers",
+      "regex": "/^[<>|=]{4,}/m"
+    },
+    {
+      "message": "You have unfinished devs",
+      "nonBlocking": "true",
+      "regex": "(?:FIXME|TODO)"
     },
     {
       "filter": "^package\\.json$",
