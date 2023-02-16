@@ -7,12 +7,12 @@
   "license": "MIT",
   "scripts": {
     "build": "mesh build",
-    "commit": "git-cz",
+    "commit": "git cz",
     "dev": "mesh dev",
     "start": "mesh start",
     "validate": "mesh validate",
     "release": "release-it",
-    "postinstall": "husky install"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@graphql-mesh/graphql": "^0.34.5",
@@ -29,7 +29,10 @@
     "@release-it/conventional-changelog": "^5.1.1",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
+    "git-precommit-checks": "^3.1.0",
     "husky": "^8.0.3",
-    "release-it": "^15.6.0"
+    "lint-staged": "^13.1.2",
+    "release-it": "^15.6.0",
+    "validate-branch-name": "^1.3.0"
   }
 }
