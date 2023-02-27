@@ -1,17 +1,26 @@
-type TheCollectionResponse {
-  myCollection: Collection
-  # openseaListings: OpenSeaAllListingsResponse
+# type TheCollectionResponse {
+#   myCollection: Collection
+#   openseaListings: OpenSeaAllListingsResponse
+# }
+
+# extend type Query {
+#   theCollection(id: ID!, slug: String!): TheCollectionResponse
+# }
+
+# extend type Collection {
+#   openseaAllListings: OpenSeaAllListingsResponse
+#   openseaAllOffers: OpenSeaAllOffersResponse
+# }
+
+# extend type Token {
+#   openseaListings: OpenSeaListingsResponse
+#   openseaOffers: OpenSeaOffersResponse
+# }
+
+extend type NFToken {
+  details: Token
 }
 
-extend type OpenSeaAllListingsResponse {
-  myCollection: Collection
-}
-
-extend type Token {
-  openseaListings: OpenSeaListingsResponse
-  openseaOffers: OpenSeaOffersResponse
-}
-
-extend type Query {
-  theCollection(id: ID!, slug: String!): TheCollectionResponse
+extend type NFTCollection {
+  details: Collection
 }

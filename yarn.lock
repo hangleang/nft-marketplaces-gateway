@@ -1150,6 +1150,19 @@
     lodash.get "4.4.2"
     tslib "^2.4.0"
 
+"@graphql-mesh/transform-prefix@^0.12.14":
+  version "0.12.14"
+  resolved "https://registry.yarnpkg.com/@graphql-mesh/transform-prefix/-/transform-prefix-0.12.14.tgz#583da6bf9bed0a1547c9198178b217652d0037ba"
+  integrity sha512-vEZbHxB9RDuuBRs5FwG9X1M/AVg3JVR9z0Oi2A/0BIs982l7+Hsi9WBlYvBFZ4i0jq8TD0cOr1aWthfnkjMliQ==
+  dependencies:
+    "@graphql-mesh/types" "0.91.5"
+    "@graphql-mesh/utils" "0.43.13"
+    "@graphql-tools/delegate" "9.0.27"
+    "@graphql-tools/utils" "9.2.1"
+    "@graphql-tools/wrap" "9.3.6"
+    graphql-scalars "1.20.1"
+    tslib "^2.4.0"
+
 "@graphql-mesh/transform-rename@^0.14.14":
   version "0.14.14"
   resolved "https://registry.yarnpkg.com/@graphql-mesh/transform-rename/-/transform-rename-0.14.14.tgz#bc7a5d63f1e5e42ad25792ad0e9785b71d50b353"
