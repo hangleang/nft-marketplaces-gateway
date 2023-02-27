@@ -1,0 +1,17 @@
+type TheCollectionResponse {
+  myCollection: Collection
+  # openseaListings: OpenSeaAllListingsResponse
+}
+
+extend type OpenSeaAllListingsResponse {
+  myCollection: Collection
+}
+
+extend type Token {
+  openseaListings: OpenSeaListingsResponse
+  openseaOffers: OpenSeaOffersResponse
+}
+
+extend type Query {
+  theCollection(id: ID!, slug: String!): TheCollectionResponse
+}

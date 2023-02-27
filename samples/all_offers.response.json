@@ -1,0 +1,59 @@
+{
+  "offers": [
+    {
+      "order_hash": "0x28be813ac317f12524339c8f06d2a3619f83b1d853a88ee55bf62ccaff061f72",
+      "chain": "ethereum",
+      "criteria": null,
+      "protocol_data": {
+        "parameters": {
+          "offerer": "0xb193b915379cee3e3e474169a8d58d0cea0486ee",
+          "offer": [
+            {
+              "itemType": 1,
+              "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "identifierOrCriteria": "0",
+              "startAmount": "10000000000000000",
+              "endAmount": "10000000000000000"
+            }
+          ],
+          "consideration": [
+            {
+              "itemType": 2,
+              "token": "0x1A92f7381B9F03921564a437210bB9396471050C",
+              "identifierOrCriteria": "1",
+              "startAmount": "1",
+              "endAmount": "1",
+              "recipient": "0xB193B915379Cee3e3e474169A8d58D0Cea0486EE"
+            },
+            {
+              "itemType": 1,
+              "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "identifierOrCriteria": "0",
+              "startAmount": "250000000000000",
+              "endAmount": "250000000000000",
+              "recipient": "0x0000a26b00c1F0DF003000390027140000fAa719"
+            },
+            {
+              "itemType": 1,
+              "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "identifierOrCriteria": "0",
+              "startAmount": "500000000000000",
+              "endAmount": "500000000000000",
+              "recipient": "0xD98D29Beb788fF04e7a648775FcB083282aE9C4B"
+            }
+          ],
+          "startTime": "1666876846",
+          "endTime": "1670116846",
+          "orderType": 2,
+          "zone": "0x004C00500000aD104D7DBd00e3ae0A5C00560C00",
+          "zoneHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "salt": "0x6b255107a690bf",
+          "conduitKey": "0x0000007b02230091a7ed01230072f7006a004d60a8d4e71d599b8104250f0000",
+          "totalOriginalConsiderationItems": 3,
+          "counter": 0
+        },
+        "signature": "0x5f3e988803cb3211a065ab9f518d1f3400f14b2842e5cbba3e2ce9dbe33a3efbfbf2848a5371453b59a4467b16e45ed47588f1452e3a03ea6ff2c0dd299480b3"
+      }
+    }
+  ]
+}
