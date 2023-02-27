@@ -26,5 +26,5 @@ jobs:
         run: yarn --frozen-lockfile
       - name: Builds artifacts for a gateway (production) server or SDK. 
         run: yarn build
-      # - name: Validate the built artifacts for a gateway (production) server
-      #   run: yarn validate
+      - name: Validate the built artifacts for a gateway (production) server
+        run: yarn validate

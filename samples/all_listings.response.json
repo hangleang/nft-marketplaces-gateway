@@ -1,0 +1,65 @@
+{
+  "listings": [
+    {
+      "order_hash": "0x2815d552ed7e9c8cec48647a72ef21b856df3ed7bb157bbfdd089f33d121e50b",
+      "chain": "ethereum",
+      "type": "basic",
+      "price": {
+        "current": {
+          "value": "7000000000000000000",
+          "currency": "eth"
+        }
+      },
+      "protocol_data": {
+        "parameters": {
+          "offerer": "0xf0c53ec98aec7bdd2c1d5d9435b94d3cb5c322a2",
+          "offer": [
+            {
+              "itemType": 2,
+              "token": "0x1A92f7381B9F03921564a437210bB9396471050C",
+              "identifierOrCriteria": "9010",
+              "startAmount": "1",
+              "endAmount": "1"
+            }
+          ],
+          "consideration": [
+            {
+              "itemType": 0,
+              "token": "0x0000000000000000000000000000000000000000",
+              "identifierOrCriteria": "0",
+              "startAmount": "6475000000000000000",
+              "endAmount": "6475000000000000000",
+              "recipient": "0xf0C53eC98AEC7bDD2c1D5D9435B94D3Cb5C322A2"
+            },
+            {
+              "itemType": 0,
+              "token": "0x0000000000000000000000000000000000000000",
+              "identifierOrCriteria": "0",
+              "startAmount": "175000000000000000",
+              "endAmount": "175000000000000000",
+              "recipient": "0x5b3256965e7C3cF26E11FCAf296DfC8807C01073"
+            },
+            {
+              "itemType": 0,
+              "token": "0x0000000000000000000000000000000000000000",
+              "identifierOrCriteria": "0",
+              "startAmount": "350000000000000000",
+              "endAmount": "350000000000000000",
+              "recipient": "0xD98D29Beb788fF04e7a648775FcB083282aE9C4B"
+            }
+          ],
+          "startTime": "1655305666",
+          "endTime": "1669393341",
+          "orderType": 2,
+          "zone": "0x004C00500000aD104D7DBd00e3ae0A5C00560C00",
+          "zoneHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "salt": "0x28cd2479d2a7a7",
+          "conduitKey": "0x0000007b02230091a7ed01230072f7006a004d60a8d4e71d599b8104250f0000",
+          "totalOriginalConsiderationItems": 3,
+          "counter": 0
+        },
+        "signature": "0x48267876bf380ffcf565c546f7311598a5b7175f3f992f0911e4f78fef227b966acfaecb184095eb64afffe676225fc62ad3c5c8440aec577a1e420207acdef81b"
+      }
+    }
+  ]
+}
