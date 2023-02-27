@@ -6,36 +6,27 @@ sources:
         # source: ./introspections/nfts.schema.graphql
     transforms:
       - rename: 
-          # mode: bare
+          mode: bare
           renames:
             - from: 
-                type: ERC721Contract
+                type: ERC(.*)Contract
               to:
-                type: Collection
-              # useRegExpForTypes: true
-            - from:
-                type: Query
-                field: erc(.*)Contract
-              to:
-                type: Query
-                field: collection
-              useRegExpForFields: true
+                type: NFTCollection
+              useRegExpForTypes: true
             - from: 
-                type: ERC721Token
+                type: ERC(.*)Token
               to:
-                type: Token
-              # useRegExpForTypes: true
-            - from:
-                type: Query
-                field: erc(.*)Token
-              to:
-                type: Query
-                field: token
-              useRegExpForFields: true
+                type: NFToken
+              useRegExpForTypes: true
             - from: 
                 type: ERC1155Balance
               to: 
-                type: Balance
+                type: NFTBalance
+            - from:
+                type: ERC(.*)Operator
+              to:
+                type: Operator
+              useRegExpForTypes: true
             - from: 
                 type: Account
                 field: asERC(.*)
@@ -43,77 +34,7 @@ sources:
                 type: Account
                 field: asCollection
               useRegExpForFields: true
-            - from: 
-                type: Account
-                field: ERC721tokens
-              to:
-                type: Account
-                field: tokens
-            - from: 
-                type: Account
-                field: ERC1155balances
-              to:
-                type: Account
-                field: balances
-            - from:
-                type: Query
-                field: erc1155Balance
-              to:
-                type: Query
-                field: balance
-            - from:
-                type: Query
-                field: erc1155Balances
-              to:
-                type: Query
-                field: balances
-            - from:
-                type: ERC(.*)Operator
-              to:
-                type: Operator
-              useRegExpForTypes: true
-            - from:
-                type: Query
-                field: erc(.*)Operator
-              to:
-                type: Query
-                field: delegation
-              useRegExpForFields: true
-            - from: 
-                type: Account
-                field: ERC(.*)operator(.*)
-              to: 
-                type: Account
-                field: delegations
-              useRegExpForFields: true
-            - from: 
-                type: Account
-                field: ERC721transfer(.*)
-              to: 
-                type: Account
-                field: tokenTransfers
-              useRegExpForFields: true
-            - from:
-                type: Query
-                field: erc721Transfer
-              to:
-                type: Query
-                field: tokenTransfer
-              useRegExpForFields: true
-            - from: 
-                type: Account
-                field: ERC1155transfer(.*)
-              to: 
-                type: Account
-                field: balanceTransfers
-              useRegExpForFields: true
-            - from:
-                type: Query
-                field: erc1155Transfer
-              to:
-                type: Query
-                field: balanceTransfer
-              useRegExpForFields: true
+      
       - autoTypeMerging: true
 
   - name: WTFMarketplace
@@ -124,102 +45,178 @@ sources:
     transforms:
       - autoTypeMerging: true
 
-  - name: OpenSeaSeaport
-    handler:
-      graphql:
-        endpoint: https://api.thegraph.com/subgraphs/name/hangleang/opensea-seaport-goerli
-        # source: https://github.com/messari/subgraphs/blob/master/subgraphs/seaport/schema.graphql
-    transforms:
-      - autoTypeMerging: true
+transforms:
+  - rename:
+      renames:
+        - from: 
+            type: Account
+            field: ERC721tokens
+          to:
+            type: Account
+            field: tokens
+        - from: 
+            type: Account
+            field: ERC1155balances
+          to:
+            type: Account
+            field: balances
+        - from: 
+            type: Account
+            field: ERC(.*)operator(.*)
+          to: 
+            type: Account
+            field: delegations
+          useRegExpForFields: true
+        - from: 
+            type: Account
+            field: ERC721transfer(.*)
+          to: 
+            type: Account
+            field: tokenTransfers
+          useRegExpForFields: true
+        - from: 
+            type: Account
+            field: ERC1155transfer(.*)
+          to: 
+            type: Account
+            field: balanceTransfers
+          useRegExpForFields: true
+        # - from:
+        #     type: Query
+        #     field: erc1155Balance
+        #   to:
+        #     type: Query
+        #     field: balance
+        # - from:
+        #     type: Query
+        #     field: erc1155Balances
+        #   to:
+        #     type: Query
+        #     field: balances
+        - from:
+            type: Query
+            field: erc721Transfer
+          to:
+            type: Query
+            field: tokenTransfer
+          useRegExpForFields: true
+        - from:
+            type: Query
+            field: erc1155Transfer
+          to:
+            type: Query
+            field: balanceTransfer
+          useRegExpForFields: true
+        - from:
+            type: Query
+            field: erc(.*)Operator
+          to:
+            type: Query
+            field: delegation
+          useRegExpForFields: true
+        # - from:
+        #     type: Query
+        #     field: erc(.*)Contract
+        #   to:
+        #     type: Query
+        #     field: nftCollection
+        #   useRegExpForFields: true
+        # - from:
+        #     type: Query
+        #     field: erc(.*)Token
+        #   to:
+        #     type: Query
+        #     field: nftToken
+        #   useRegExpForFields: true
 
-  - name: OpenSeaAPI
-    handler:
-      jsonSchema:
-        endpoint: https://testnets-api.opensea.io/v2
-        operationHeaders:
-          X-API-KEY: "{context.headers['opensea-api-token']}"
-        queryParams:
-          limit: 10
-        operations:
-          - type: Query
-            field: openseaListings
-            path: /orders/goerli/seaport/listings
-            method: GET
-            responseSample: ./samples/listings.response.json
-            responseTypeName: OpenSeaListingsResponse
-            argTypeMap:
-              asset_contract_address:
-                type: string
-              token_ids:
-                type: string
-              maker: 
-                type: string
-              limit: 
-                type: integer
-            queryParamArgMap:
-              asset_contract_address: asset_contract_address
-              token_ids: token_ids
-              maker: maker
-              limit: limit
-          - type: Query
-            field: openseaAllListings
-            path: /listings/collection/{args.slug}/all
-            method: GET
-            responseSample: ./samples/all_listings.response.json
-            responseTypeName: OpenSeaAllListingsResponse
-            argTypeMap:
-              slug:
-                type: string
-                nullable: false
-              limit:  
-                type: integer
-            queryParamArgMap:
-              limit: limit
-          - type: Query
-            field: openseaOffers
-            path: /orders/goerli/seaport/offers
-            method: GET
-            responseSample: ./samples/offers.response.json
-            responseTypeName: OpenSeaOffersResponse
-            argTypeMap:
-              asset_contract_address:
-                type: string
-              token_ids:
-                type: string
-              maker: 
-                type: string
-              limit: 
-                type: integer
-            queryParamArgMap:
-              asset_contract_address: asset_contract_address
-              token_ids: token_ids
-              maker: maker
-              limit: limit
-          - type: Query
-            field: openseaAllOffers
-            path: /offers/collection/{args.slug}/all
-            method: GET
-            responseSample: ./samples/all_offers.response.json
-            responseTypeName: OpenSeaAllOffersResponse
-            argTypeMap:
-              slug:
-                type: string
-                nullable: false
-              limit:  
-                type: integer
-            queryParamArgMap:
-              limit: limit
+  # - name: OpenSeaSeaport
+  #   handler:
+  #     graphql:
+  #       endpoint: https://api.thegraph.com/subgraphs/name/hangleang/opensea-seaport-goerli
+  #       # source: https://github.com/messari/subgraphs/blob/master/subgraphs/seaport/schema.graphql
+  #   transforms:
+  #     - autoTypeMerging: true
 
+  # - name: OpenSeaAPI
+  #   handler:
+  #     jsonSchema:
+  #       endpoint: https://testnets-api.opensea.io/v2
+  #       operationHeaders:
+  #         X-API-KEY: "{context.headers['opensea-api-token']}"
+  #       queryParams:
+  #         limit: 10
+  #       operations:
+  #         - type: Query
+  #           field: openseaListings
+  #           path: /orders/goerli/seaport/listings
+  #           method: GET
+  #           responseSample: ./samples/listings.response.json
+  #           responseTypeName: OpenSeaListingsResponse
+  #           argTypeMap:
+  #             asset_contract_address:
+  #               type: string
+  #             token_ids:
+  #               type: string
+  #             maker: 
+  #               type: string
+  #             limit: 
+  #               type: integer
+  #           queryParamArgMap:
+  #             asset_contract_address: asset_contract_address
+  #             token_ids: token_ids
+  #             maker: maker
+  #             limit: limit
+  #         - type: Query
+  #           field: openseaAllListings
+  #           path: /listings/collection/{args.slug}/all
+  #           method: GET
+  #           responseSample: ./samples/all_listings.response.json
+  #           responseTypeName: OpenSeaAllListingsResponse
+  #           argTypeMap:
+  #             slug:
+  #               type: string
+  #               nullable: false
+  #             limit:  
+  #               type: integer
+  #           queryParamArgMap:
+  #             limit: limit
+  #         - type: Query
+  #           field: openseaOffers
+  #           path: /orders/goerli/seaport/offers
+  #           method: GET
+  #           responseSample: ./samples/offers.response.json
+  #           responseTypeName: OpenSeaOffersResponse
+  #           argTypeMap:
+  #             asset_contract_address:
+  #               type: string
+  #             token_ids:
+  #               type: string
+  #             maker: 
+  #               type: string
+  #             limit: 
+  #               type: integer
+  #           queryParamArgMap:
+  #             asset_contract_address: asset_contract_address
+  #             token_ids: token_ids
+  #             maker: maker
+  #             limit: limit
+  #         - type: Query
+  #           field: openseaAllOffers
+  #           path: /offers/collection/{args.slug}/all
+  #           method: GET
+  #           responseSample: ./samples/all_offers.response.json
+  #           responseTypeName: OpenSeaAllOffersResponse
+  #           argTypeMap:
+  #             slug:
+  #               type: string
+  #               nullable: false
+  #             limit:  
+  #               type: integer
+  #           queryParamArgMap:
+  #             limit: limit
 
+additionalTypeDefs:
+  - ./src/type_defs.graphql
 
-# additionalTypeDefs: |
-#   type TheCollectionResponse {
-#     myCollection: Collection
-#   }
-  
-#   extend type Query {
-#     theCollection(id: ID!): TheCollectionResponse
-#   }
-
-# additionalResolvers:
-#   - ./src/resolvers.ts
+additionalResolvers:
+  - ./src/resolvers/the_collection.resolver.ts
