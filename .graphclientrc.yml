@@ -2,7 +2,8 @@ sources:
   - name: NFTs
     handler:
       graphql:
-        endpoint: https://api.thegraph.com/subgraphs/id/QmShgsUWeveGsVxTfhmUz2ePZ8JGHFvo47QhutppdBN5rV/graphql
+        endpoint: https://api.thegraph.com/subgraphs/id/QmShgsUWeveGsVxTfhmUz2ePZ8JGHFvo47QhutppdBN5rV
+        # source: ./introspections/nfts.schema.graphql
     transforms:
       - rename: 
           # mode: bare
@@ -118,14 +119,16 @@ sources:
   - name: WTFMarketplace
     handler:
       graphql:
-        endpoint: https://api.thegraph.com/subgraphs/name/hangleang/nft-marketplace-goerli/graphql
+        endpoint: https://api.thegraph.com/subgraphs/name/hangleang/nft-marketplace-goerli
+        # source: https://github.com/hangleang/nft-marketplace-subgraph/blob/main/schema.graphql
     transforms:
       - autoTypeMerging: true
 
   - name: OpenSeaSeaport
     handler:
       graphql:
-        endpoint: https://api.thegraph.com/subgraphs/name/hangleang/opensea-seaport-goerli/graphql
+        endpoint: https://api.thegraph.com/subgraphs/name/hangleang/opensea-seaport-goerli
+        # source: https://github.com/messari/subgraphs/blob/master/subgraphs/seaport/schema.graphql
     transforms:
       - autoTypeMerging: true
 

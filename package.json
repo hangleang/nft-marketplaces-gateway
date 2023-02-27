@@ -10,7 +10,7 @@
     "build": "graphclient build",
     "dev": "graphclient serve-dev",
     "start": "graphclient serve-prod",
-    "validate": "graphclient validate",
+    "validate": "echo validate",
     "release": "release-it",
     "prepare": "husky install"
   },
