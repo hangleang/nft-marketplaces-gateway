@@ -219,4 +219,4 @@ additionalTypeDefs:
   - ./src/type_defs.graphql
 
 additionalResolvers:
-  - ./src/resolvers/the_collection.resolver.ts
+  - ./src/resolvers.ts

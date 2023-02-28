@@ -18,9 +18,13 @@
 # }
 
 extend type NFToken {
-  details: Token
+  myToken: Token
 }
 
 extend type NFTCollection {
-  details: Collection
+  myCollection: Collection
+}
+
+extend type Collection {
+  nftCollection: NFTCollection
 }
