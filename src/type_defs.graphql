@@ -1,34 +1,44 @@
-extend type NFToken {
-  myToken: Token
+extend type Account {
+  asUser: User
 }
 
-extend type NFTCollection {
-  myCollection: Collection
+extend type User {
+  asAccount: Account
+}
+
+extend type ERC721Contract {
+  asMyCollection: Collection
+  asOpenseaCollection: OS_Collection
+}
+
+extend type ERC1155Contract {
+  asMyCollection: Collection
+  asOpenseaCollection: OS_Collection
+}
+
+extend type ERC721Token {
+  asMyToken: Token
+  asOpenseaListings: OpenSeaListingsResponse
+  asOpenseaOffers: OpenSeaOffersResponse
+}
+
+extend type ERC1155Token {
+  asMyToken: Token
+  asOpenseaListings: OpenSeaListingsResponse
+  asOpenseaOffers: OpenSeaOffersResponse
 }
 
 extend type Collection {
-  nftCollection: NFTCollection
+  asERC721: ERC721Contract
+  asERC1155: ERC1155Contract
 }
 
 extend type Token {
-  nftToken: NFToken
+  asERC721Token: ERC721Token
+  asERC1155Token: ERC1155Token
 }
 
-# type TheCollectionResponse {
-#   myCollection: Collection
-#   openseaListings: OpenSeaAllListingsResponse
-# }
-
-# extend type Query {
-#   theCollection(id: ID!, slug: String!): TheCollectionResponse
-# }
-
-# extend type Collection {
-#   openseaAllListings: OpenSeaAllListingsResponse
-#   openseaAllOffers: OpenSeaAllOffersResponse
-# }
-
-# extend type Token {
-#   openseaListings: OpenSeaListingsResponse
-#   openseaOffers: OpenSeaOffersResponse
-# }
+extend type OS_Collection {
+  openseaAllListings: OpenSeaAllListingsResponse
+  openseaAllOffers: OpenSeaAllOffersResponse
+}

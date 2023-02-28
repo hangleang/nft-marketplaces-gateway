@@ -8,16 +8,16 @@ sources:
       - rename: 
           mode: bare
           renames:
-            - from: 
-                type: ERC(.*)Contract
-              to:
-                type: NFTCollection
-              useRegExpForTypes: true
-            - from: 
-                type: ERC(.*)Token
-              to:
-                type: NFToken
-              useRegExpForTypes: true
+            # - from: 
+            #     type: ERC(.*)Contract
+            #   to:
+            #     type: NFTCollection
+            #   useRegExpForTypes: true
+            # - from: 
+            #     type: ERC(.*)Token
+            #   to:
+            #     type: NFToken
+            #   useRegExpForTypes: true
             - from: 
                 type: ERC1155Balance
               to: 
@@ -42,6 +42,24 @@ sources:
         endpoint: https://api.thegraph.com/subgraphs/name/hangleang/nft-marketplace-goerli
         # source: https://github.com/hangleang/nft-marketplace-subgraph/blob/main/schema.graphql
     transforms:
+      - rename:
+          renames:
+            - from: 
+                type: Account
+              to:
+                type: User
+            - from:
+                type: Query
+                field: account
+              to:
+                type: Query
+                field: user
+            - from:
+                type: Query
+                field: accounts
+              to:
+                type: Query
+                field: users
       - autoTypeMerging: true
 
   - name: OpenSeaSeaport
@@ -54,9 +72,101 @@ sources:
           filters:
             - Type.!{_OrderFulfillment, _Item}
             - Query.!{orderFulfillment, orderFulfillments, item, items}
+            # - Marketplace.!{name, slug, network, schemaVersion, subgraphVersion, methodologyVersion, collectionCount, tradeCount, cumulativeUniqueTraders}
+            # - Collection.!{name, symbol, totalSupply, nftStandard, tradeCount, buyerCount, sellerCount, trades}
+            # - MarketplaceDailySnapshot.!{collectionCount, tradeCount, cumulativeUniqueTraders, dailyActiveTraders, dailyTradedCollectionCount, dailyTradedItemCount}
+      - prefix:
+          value: OS_
+      - rename:
+          renames:
+            - from:
+                type: Query
+                field: (.*)
+              to:
+                type: Query
+                field: os_$1
+              useRegExpForFields: true
       - autoTypeMerging: true
 
-transforms:
+  - name: OpenSeaAPI
+    handler:
+      jsonSchema:
+        endpoint: https://testnets-api.opensea.io/v2
+        operationHeaders:
+          X-API-KEY: "{context.headers['opensea-api-token']}"
+        queryParams:
+          limit: 10
+        operations:
+          - type: Query
+            field: openseaListings
+            path: /orders/goerli/seaport/listings
+            method: GET
+            responseSample: ./samples/listings.response.json
+            responseTypeName: OpenSeaListingsResponse
+            argTypeMap:
+              asset_contract_address:
+                type: string
+              token_ids:
+                type: string
+              maker: 
+                type: string
+              limit: 
+                type: integer
+            queryParamArgMap:
+              asset_contract_address: asset_contract_address
+              token_ids: token_ids
+              maker: maker
+              limit: limit
+          - type: Query
+            field: openseaAllListings
+            path: /listings/collection/{args.slug}/all
+            method: GET
+            responseSample: ./samples/all_listings.response.json
+            responseTypeName: OpenSeaAllListingsResponse
+            argTypeMap:
+              slug:
+                type: string
+                nullable: false
+              limit:  
+                type: integer
+            queryParamArgMap:
+              limit: limit
+          - type: Query
+            field: openseaOffers
+            path: /orders/goerli/seaport/offers
+            method: GET
+            responseSample: ./samples/offers.response.json
+            responseTypeName: OpenSeaOffersResponse
+            argTypeMap:
+              asset_contract_address:
+                type: string
+              token_ids:
+                type: string
+              maker: 
+                type: string
+              limit: 
+                type: integer
+            queryParamArgMap:
+              asset_contract_address: asset_contract_address
+              token_ids: token_ids
+              maker: maker
+              limit: limit
+          - type: Query
+            field: openseaAllOffers
+            path: /offers/collection/{args.slug}/all
+            method: GET
+            responseSample: ./samples/all_offers.response.json
+            responseTypeName: OpenSeaAllOffersResponse
+            argTypeMap:
+              slug:
+                type: string
+                nullable: false
+              limit:  
+                type: integer
+            queryParamArgMap:
+              limit: limit
+
+transforms: 
   - rename:
       renames:
         - from: 
@@ -139,84 +249,6 @@ transforms:
             type: Query
             field: delegation
           useRegExpForFields: true
-
-  # - name: OpenSeaAPI
-  #   handler:
-  #     jsonSchema:
-  #       endpoint: https://testnets-api.opensea.io/v2
-  #       operationHeaders:
-  #         X-API-KEY: "{context.headers['opensea-api-token']}"
-  #       queryParams:
-  #         limit: 10
-  #       operations:
-  #         - type: Query
-  #           field: openseaListings
-  #           path: /orders/goerli/seaport/listings
-  #           method: GET
-  #           responseSample: ./samples/listings.response.json
-  #           responseTypeName: OpenSeaListingsResponse
-  #           argTypeMap:
-  #             asset_contract_address:
-  #               type: string
-  #             token_ids:
-  #               type: string
-  #             maker: 
-  #               type: string
-  #             limit: 
-  #               type: integer
-  #           queryParamArgMap:
-  #             asset_contract_address: asset_contract_address
-  #             token_ids: token_ids
-  #             maker: maker
-  #             limit: limit
-  #         - type: Query
-  #           field: openseaAllListings
-  #           path: /listings/collection/{args.slug}/all
-  #           method: GET
-  #           responseSample: ./samples/all_listings.response.json
-  #           responseTypeName: OpenSeaAllListingsResponse
-  #           argTypeMap:
-  #             slug:
-  #               type: string
-  #               nullable: false
-  #             limit:  
-  #               type: integer
-  #           queryParamArgMap:
-  #             limit: limit
-  #         - type: Query
-  #           field: openseaOffers
-  #           path: /orders/goerli/seaport/offers
-  #           method: GET
-  #           responseSample: ./samples/offers.response.json
-  #           responseTypeName: OpenSeaOffersResponse
-  #           argTypeMap:
-  #             asset_contract_address:
-  #               type: string
-  #             token_ids:
-  #               type: string
-  #             maker: 
-  #               type: string
-  #             limit: 
-  #               type: integer
-  #           queryParamArgMap:
-  #             asset_contract_address: asset_contract_address
-  #             token_ids: token_ids
-  #             maker: maker
-  #             limit: limit
-  #         - type: Query
-  #           field: openseaAllOffers
-  #           path: /offers/collection/{args.slug}/all
-  #           method: GET
-  #           responseSample: ./samples/all_offers.response.json
-  #           responseTypeName: OpenSeaAllOffersResponse
-  #           argTypeMap:
-  #             slug:
-  #               type: string
-  #               nullable: false
-  #             limit:  
-  #               type: integer
-  #           queryParamArgMap:
-  #             limit: limit
 
 additionalTypeDefs:
   - ./src/type_defs.graphql
