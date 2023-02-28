@@ -1,3 +1,15 @@
+extend type NFToken {
+  myToken: Token
+}
+
+extend type NFTCollection {
+  myCollection: Collection
+}
+
+extend type Collection {
+  nftCollection: NFTCollection
+}
+
 # type TheCollectionResponse {
 #   myCollection: Collection
 #   openseaListings: OpenSeaAllListingsResponse
@@ -16,15 +28,3 @@
 #   openseaListings: OpenSeaListingsResponse
 #   openseaOffers: OpenSeaOffersResponse
 # }
-
-extend type NFToken {
-  myToken: Token
-}
-
-extend type NFTCollection {
-  myCollection: Collection
-}
-
-extend type Collection {
-  nftCollection: NFTCollection
-}

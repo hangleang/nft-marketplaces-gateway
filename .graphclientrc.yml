@@ -34,7 +34,6 @@ sources:
                 type: Account
                 field: asCollection
               useRegExpForFields: true
-      
       - autoTypeMerging: true
 
   - name: WTFMarketplace
@@ -43,6 +42,18 @@ sources:
         endpoint: https://api.thegraph.com/subgraphs/name/hangleang/nft-marketplace-goerli
         # source: https://github.com/hangleang/nft-marketplace-subgraph/blob/main/schema.graphql
     transforms:
+      - autoTypeMerging: true
+
+  - name: OpenSeaSeaport
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/hangleang/opensea-seaport-goerli
+        # source: https://github.com/messari/subgraphs/blob/master/subgraphs/seaport/schema.graphql
+    transforms:
+      - filterSchema:
+          filters:
+            - Type.!{_OrderFulfillment, _Item}
+            - Query.!{orderFulfillment, orderFulfillments, item, items}
       - autoTypeMerging: true
 
 transforms:
@@ -93,6 +104,20 @@ transforms:
         #   to:
         #     type: Query
         #     field: balances
+        # - from:
+        #     type: Query
+        #     field: erc(.*)Contract
+        #   to:
+        #     type: Query
+        #     field: nftCollection
+        #   useRegExpForFields: true
+        # - from:
+        #     type: Query
+        #     field: erc(.*)Token
+        #   to:
+        #     type: Query
+        #     field: nftToken
+        #   useRegExpForFields: true
         - from:
             type: Query
             field: erc721Transfer
@@ -114,28 +139,6 @@ transforms:
             type: Query
             field: delegation
           useRegExpForFields: true
-        # - from:
-        #     type: Query
-        #     field: erc(.*)Contract
-        #   to:
-        #     type: Query
-        #     field: nftCollection
-        #   useRegExpForFields: true
-        # - from:
-        #     type: Query
-        #     field: erc(.*)Token
-        #   to:
-        #     type: Query
-        #     field: nftToken
-        #   useRegExpForFields: true
-
-  # - name: OpenSeaSeaport
-  #   handler:
-  #     graphql:
-  #       endpoint: https://api.thegraph.com/subgraphs/name/hangleang/opensea-seaport-goerli
-  #       # source: https://github.com/messari/subgraphs/blob/master/subgraphs/seaport/schema.graphql
-  #   transforms:
-  #     - autoTypeMerging: true
 
   # - name: OpenSeaAPI
   #   handler:
