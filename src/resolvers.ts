@@ -35,6 +35,24 @@ const resolvers: Resolvers = {
       }
     }
   },
+  Token: {
+    nftToken: {
+      selectionSet: /* GraphQL */ `{ id, collection { collectionType } }`,
+      resolve: async (root, _args, context, info) => {
+        if (root.collection.collectionType == "SingleEdition") {
+          return context.NFTs.Query.erc721Token({
+            root, context, info, args: { id: root.id }
+          })
+        } else if (root.collection.collectionType == "MultiEdition") {
+          return context.NFTs.Query.erc1155Token({
+            root, context, info, args: { id: root.id }
+          })
+        } else {
+          return null;
+        }
+      }
+    }
+  }
   // OpenSeaAllListingsResponse: {
   //   myCollection: {
   //     selectionSet: `{
