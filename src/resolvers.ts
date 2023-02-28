@@ -1,6 +1,40 @@
 import { Resolvers } from '../.graphclient'
 
 const resolvers: Resolvers = {
+  NFToken: {
+    myToken: {
+      selectionSet: /* GraphQL */ `{ id }`,
+      resolve: async (root, _args, context, info) => await context.WTFMarketplace.Query.token({
+        root, context, info, args: { id: root.id }
+      })
+    }
+  },
+  NFTCollection: {
+    myCollection: {
+      selectionSet: /* GraphQL */ `{ id }`,
+      resolve: async (root, _args, context, info) => await context.WTFMarketplace.Query.collection({
+        root, context, info, args: { id: root.id }
+      })
+    }
+  },
+  Collection: {
+    nftCollection: {
+      selectionSet: /* GraphQL */ `{ id, collectionType }`,
+      resolve: async (root, _args, context, info) => {
+        if (root.collectionType == "SingleEdition") {
+          return context.NFTs.Query.erc721Contract({
+            root, context, info, args: { id: root.id }
+          })
+        } else if (root.collectionType == "MultiEdition") {
+          return context.NFTs.Query.erc1155Contract({
+            root, context, info, args: { id: root.id }
+          })
+        } else {
+          return null;
+        }
+      }
+    }
+  },
   // OpenSeaAllListingsResponse: {
   //   myCollection: {
   //     selectionSet: `{
@@ -86,40 +120,6 @@ const resolvers: Resolvers = {
   //     }
   //   }
   // },
-  NFToken: {
-    myToken: {
-      selectionSet: /* GraphQL */ `{ id }`,
-      resolve: async (root, _args, context, info) => await context.WTFMarketplace.Query.token({
-        root, context, info, args: { id: root.id }
-      })
-    }
-  },
-  NFTCollection: {
-    myCollection: {
-      selectionSet: /* GraphQL */ `{ id }`,
-      resolve: async (root, _args, context, info) => await context.WTFMarketplace.Query.collection({
-        root, context, info, args: { id: root.id }
-      })
-    }
-  },
-  Collection: {
-    nftCollection: {
-      selectionSet: /* GraphQL */ `{ id, collectionType }`,
-      resolve: async (root, _args, context, info) => {
-        if (root.collectionType == "SingleEdition") {
-          return context.NFTs.Query.erc721Contract({
-            root, context, info, args: { id: root.id }
-          })
-        } else if (root.collectionType == "MultiEdition") {
-          return context.NFTs.Query.erc1155Contract({
-            root, context, info, args: { id: root.id }
-          })
-        } else {
-          return null;
-        }
-      }
-    }
-  }
 }
 
 export default resolvers;
