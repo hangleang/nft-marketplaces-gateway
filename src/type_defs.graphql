@@ -1,5 +1,8 @@
 extend type Account {
   asUser: User
+  openseaListings: OpenSeaListingsResponse
+  openseaOffers: OpenSeaOffersResponse
+  openseaGivenOffers: OpenSeaOffersResponse
 }
 
 extend type User {
@@ -18,14 +21,14 @@ extend type ERC1155Contract {
 
 extend type ERC721Token {
   asMyToken: Token
-  asOpenseaListings: OpenSeaListingsResponse
-  asOpenseaOffers: OpenSeaOffersResponse
+  openseaListings: OpenSeaListingsResponse
+  openseaOffers: OpenSeaOffersResponse
 }
 
 extend type ERC1155Token {
   asMyToken: Token
-  asOpenseaListings: OpenSeaListingsResponse
-  asOpenseaOffers: OpenSeaOffersResponse
+  openseaListings: OpenSeaListingsResponse
+  openseaOffers: OpenSeaOffersResponse
 }
 
 extend type Collection {
@@ -39,6 +42,8 @@ extend type Token {
 }
 
 extend type OS_Collection {
+  asERC721: ERC721Contract
+  asERC1155: ERC1155Contract
   openseaAllListings: OpenSeaAllListingsResponse
   openseaAllOffers: OpenSeaAllOffersResponse
 }

@@ -8,6 +8,24 @@ const resolvers: Resolvers = {
         root, context, info, args: { id: root.id }
       })
     },
+    openseaListings: {
+      selectionSet: /* GraphQL */ `{ id }`,
+      resolve: async (root, _args, context, info) => await context.OpenSeaAPI.Query.openseaListings({
+        root, context, info, args: { maker: root.id }
+      })
+    },
+    openseaOffers: {
+      selectionSet: /* GraphQL */ `{ id }`,
+      resolve: async (root, _args, context, info) => await context.OpenSeaAPI.Query.openseaOffers({
+        root, context, info, args: { maker: root.id }
+      })
+    },
+    openseaGivenOffers: {
+      selectionSet: /* GraphQL */ `{ id }`,
+      resolve: async (root, _args, context, info) => await context.OpenSeaAPI.Query.openseaOffers({
+        root, context, info, args: { taker: root.id }
+      })
+    }
   },
   User: {
     asAccount: {
@@ -52,13 +70,13 @@ const resolvers: Resolvers = {
         root, context, info, args: { id: root.id }
       })
     },
-    asOpenseaListings: {
+    openseaListings: {
       selectionSet: /* GraphQL */ `{ contract { id } identifier }`,
       resolve: async (root, _args, context, info) => await context.OpenSeaAPI.Query.openseaListings({
         root, context, info, args: { asset_contract_address: root.contract.id, token_ids: root.identifier }
       })
     },
-    asOpenseaOffers: {
+    openseaOffers: {
       selectionSet: /* GraphQL */ `{ contract { id } identifier }`,
       resolve: async (root, _args, context, info) => await context.OpenSeaAPI.Query.openseaOffers({
         root, context, info, args: { asset_contract_address: root.contract.id, token_ids: root.identifier }
@@ -72,13 +90,13 @@ const resolvers: Resolvers = {
         root, context, info, args: { id: root.id }
       })
     },
-    asOpenseaListings: {
+    openseaListings: {
       selectionSet: /* GraphQL */ `{ contract { id } identifier }`,
       resolve: async (root, _args, context, info) => await context.OpenSeaAPI.Query.openseaListings({
         root, context, info, args: { asset_contract_address: root.contract.id, token_ids: root.identifier }
       })
     },
-    asOpenseaOffers: {
+    openseaOffers: {
       selectionSet: /* GraphQL */ `{ contract { id } identifier }`,
       resolve: async (root, _args, context, info) => await context.OpenSeaAPI.Query.openseaOffers({
         root, context, info, args: { asset_contract_address: root.contract.id, token_ids: root.identifier }
@@ -126,6 +144,18 @@ const resolvers: Resolvers = {
     }
   },
   OS_Collection: {
+    asERC721: {
+      selectionSet: /* GraphQL */ `{ id, collectionType }`,
+      resolve: async (root, _args, context, info) => context.NFTs.Query.erc721Contract({
+        root, context, info, args: { id: root.id }
+      })
+    },
+    asERC1155: {
+      selectionSet: /* GraphQL */ `{ id, collectionType }`,
+      resolve: async (root, _args, context, info) => context.NFTs.Query.erc1155Contract({
+        root, context, info, args: { id: root.id }
+      })
+    },
     openseaAllListings: {
       selectionSet: /* GraphQL */ `{ id }`,
       resolve: async (root, _args, context, info) => context.OpenSeaAPI.Query.openseaAllListings({
