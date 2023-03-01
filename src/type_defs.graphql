@@ -11,12 +11,12 @@ extend type User {
 
 extend type ERC721Contract {
   asMyCollection: Collection
-  asOpenseaCollection: OS_Collection
+  asOpenseaContract: OpenSeaAssetContract
 }
 
 extend type ERC1155Contract {
   asMyCollection: Collection
-  asOpenseaCollection: OS_Collection
+  asOpenseaContract: OpenSeaAssetContract
 }
 
 extend type ERC721Token {
@@ -44,6 +44,11 @@ extend type Token {
 extend type OS_Collection {
   asERC721: ERC721Contract
   asERC1155: ERC1155Contract
+  asOpenseaContract: OpenSeaAssetContract
+}
+
+extend type OpenSeaAssetContract {
+  asOpenseaCollection: OS_Collection
   openseaAllListings: OpenSeaAllListingsResponse
   openseaAllOffers: OpenSeaAllOffersResponse
 }

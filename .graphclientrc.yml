@@ -99,7 +99,7 @@ sources:
         operations:
           - type: Query
             field: openseaListings
-            path: /orders/goerli/seaport/listings
+            path: orders/goerli/seaport/listings
             method: GET
             responseSample: ./samples/listings.response.json
             responseTypeName: OpenSeaListingsResponse
@@ -122,7 +122,7 @@ sources:
               limit: limit
           - type: Query
             field: openseaAllListings
-            path: /listings/collection/{args.slug}/all
+            path: listings/collection/{args.slug}/all
             method: GET
             responseSample: ./samples/all_listings.response.json
             responseTypeName: OpenSeaAllListingsResponse
@@ -136,7 +136,7 @@ sources:
               limit: limit
           - type: Query
             field: openseaOffers
-            path: /orders/goerli/seaport/offers
+            path: orders/goerli/seaport/offers
             method: GET
             responseSample: ./samples/offers.response.json
             responseTypeName: OpenSeaOffersResponse
@@ -159,7 +159,7 @@ sources:
               limit: limit
           - type: Query
             field: openseaAllOffers
-            path: /offers/collection/{args.slug}/all
+            path: offers/collection/{args.slug}/all
             method: GET
             responseSample: ./samples/all_offers.response.json
             responseTypeName: OpenSeaAllOffersResponse
@@ -171,6 +171,24 @@ sources:
                 type: integer
             queryParamArgMap:
               limit: limit
+
+  - name: OpenSeaOldAPI
+    handler:
+      jsonSchema:
+        endpoint: https://testnets-api.opensea.io/api/v1
+        operationHeaders:
+          X-API-KEY: "{context.headers['opensea-api-token']}"
+        operations:
+          - type: Query
+            field: openseaAssetContract
+            path: asset_contract/{args.asset_contract_address}
+            method: GET
+            responseSample: ./samples/opensea-asset-contract.response.json
+            responseTypeName: OpenSeaAssetContract
+            argTypeMap:
+              asset_contract_address:
+                type: string
+                nullable: false
 
 transforms: 
   - rename:

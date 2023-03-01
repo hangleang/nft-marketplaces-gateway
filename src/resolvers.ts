@@ -42,12 +42,18 @@ const resolvers: Resolvers = {
         root, context, info, args: { id: root.id }
       })
     },
-    asOpenseaCollection: {
+    // asOpenseaCollection: {
+    //   selectionSet: /* GraphQL */ `{ id }`,
+    //   resolve: async (root, _args, context, info) => await context.OpenSeaSeaport.Query.os_collection({
+    //     root, context, info, args: { id: root.id }
+    //   })
+    // }
+    asOpenseaContract: {
       selectionSet: /* GraphQL */ `{ id }`,
-      resolve: async (root, _args, context, info) => await context.OpenSeaSeaport.Query.os_collection({
-        root, context, info, args: { id: root.id }
+      resolve: async (root, _args, context, info) => context.OpenSeaOldAPI.Query.openseaAssetContract({
+        root, context, info, args: { asset_contract_address: root.id }
       })
-    }
+    },
   },
   ERC1155Contract: {
     asMyCollection: {
@@ -56,12 +62,18 @@ const resolvers: Resolvers = {
         root, context, info, args: { id: root.id }
       })
     },
-    asOpenseaCollection: {
+    // asOpenseaCollection: {
+    //   selectionSet: /* GraphQL */ `{ id }`,
+    //   resolve: async (root, _args, context, info) => await context.OpenSeaSeaport.Query.os_collection({
+    //     root, context, info, args: { id: root.id }
+    //   })
+    // }
+    asOpenseaContract: {
       selectionSet: /* GraphQL */ `{ id }`,
-      resolve: async (root, _args, context, info) => await context.OpenSeaSeaport.Query.os_collection({
-        root, context, info, args: { id: root.id }
+      resolve: async (root, _args, context, info) => context.OpenSeaOldAPI.Query.openseaAssetContract({
+        root, context, info, args: { asset_contract_address: root.id }
       })
-    }
+    },
   },
   ERC721Token: {
     asMyToken: {
@@ -156,19 +168,48 @@ const resolvers: Resolvers = {
         root, context, info, args: { id: root.id }
       })
     },
-    openseaAllListings: {
+    asOpenseaContract: {
       selectionSet: /* GraphQL */ `{ id }`,
-      resolve: async (root, _args, context, info) => context.OpenSeaAPI.Query.openseaAllListings({
-        root, context, info, args: { slug: root.id }
+      resolve: async (root, _args, context, info) => context.OpenSeaOldAPI.Query.openseaAssetContract({
+        root, context, info, args: { asset_contract_address: root.id }
       })
     },
-    openseaAllOffers: {
-      selectionSet: /* GraphQL */ `{ id }`,
-      resolve: async (root, _args, context, info) => context.OpenSeaAPI.Query.openseaAllOffers({
-        root, context, info, args: { slug: root.id }
-      })
-    }
   },
+  OpenSeaAssetContract: {
+    asOpenseaCollection: {
+      selectionSet: /* GraphQL */ `{ address }`,
+      resolve: async (root, _args, context, info) => {
+        const id = root.address;
+        if (!id) return null;
+        
+        return context.OpenSeaSeaport.Query.os_collection({
+          root, context, info, args: { id }
+        })
+      }
+    },
+    openseaAllListings: {
+      selectionSet: /* GraphQL */ `{ collection { slug } }`,
+      resolve: async (root, _args, context, info) => {
+        const slug = root.collection?.slug;
+        if (!slug) return null;
+
+        return context.OpenSeaAPI.Query.openseaAllListings({
+          root, context, info, args: { slug: slug }
+        })
+      }
+    },
+    openseaAllOffers: {
+      selectionSet: /* GraphQL */ `{ collection { slug } }`,
+      resolve: async (root, _args, context, info) => {
+        const slug = root.collection?.slug;
+        if (!slug) return null;
+
+        return context.OpenSeaAPI.Query.openseaAllOffers({
+          root, context, info, args: { slug }
+        })
+      }
+    }
+  }
   // Query: {
   //   marketplaces: async (root, _args, context, info) => {
   //     return Promise.all([
