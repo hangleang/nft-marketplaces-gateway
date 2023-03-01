@@ -110,12 +110,15 @@ sources:
                 type: string
               maker: 
                 type: string
+              taker: 
+                type: string
               limit: 
                 type: integer
             queryParamArgMap:
               asset_contract_address: asset_contract_address
               token_ids: token_ids
               maker: maker
+              taker: taker
               limit: limit
           - type: Query
             field: openseaAllListings
@@ -144,12 +147,15 @@ sources:
                 type: string
               maker: 
                 type: string
+              taker: 
+                type: string
               limit: 
                 type: integer
             queryParamArgMap:
               asset_contract_address: asset_contract_address
               token_ids: token_ids
               maker: maker
+              taker: taker
               limit: limit
           - type: Query
             field: openseaAllOffers
