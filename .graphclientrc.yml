@@ -2,7 +2,7 @@ sources:
   - name: NFTs
     handler:
       graphql:
-        endpoint: https://api.thegraph.com/subgraphs/id/QmShgsUWeveGsVxTfhmUz2ePZ8JGHFvo47QhutppdBN5rV
+        endpoint: https://api.thegraph.com/subgraphs/name/hangleang/nft-goerli
         # source: ./introspections/nfts.schema.graphql
     transforms:
       - rename: 
