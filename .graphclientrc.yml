@@ -279,3 +279,23 @@ additionalTypeDefs:
 
 additionalResolvers:
   - ./src/resolvers.ts
+
+plugins:
+  - responseCache:
+      includeExtensionMetadata: true
+      # cache operations for 1 hour by default
+      ttl: 3600000
+      # cache below operations for 1/2 minute
+      ttlPerCoordinate:
+        - coordinate: OpenSeaListingsResponse
+          ttl: 30000
+        - coordinate: OpenSeaOffersResponse
+          ttl: 30000
+        - coordinate: OpenSeaAllListingsResponse
+          ttl: 30000
+        - coordinate: OpenSeaAllOffersResponse
+          ttl: 30000
+        - coordinate: Listing
+          ttl: 30000
+        - coordinate: Offer
+          ttl: 30000
