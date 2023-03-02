@@ -281,6 +281,7 @@ additionalResolvers:
   - ./src/resolvers.ts
 
 plugins:
+  - httpCache: {}
   - responseCache:
       includeExtensionMetadata: true
       # cache operations for 1 hour by default
