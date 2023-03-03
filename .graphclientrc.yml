@@ -35,6 +35,11 @@ sources:
                 field: asCollection
               useRegExpForFields: true
       - autoTypeMerging: true
+      # Enable Automatic Block Tracking
+      - blockTracking:
+          validateSchema: true
+      - autoPagination:
+          validateSchema: true
 
   - name: WTFMarketplace
     handler:
@@ -61,6 +66,11 @@ sources:
                 type: Query
                 field: users
       - autoTypeMerging: true
+      # Enable Automatic Block Tracking
+      - blockTracking:
+          validateSchema: true
+      - autoPagination:
+          validateSchema: true
 
   - name: OpenSeaSeaport
     handler:
@@ -81,12 +91,17 @@ sources:
           renames:
             - from:
                 type: Query
-                field: (.*)
+                field: collection
               to:
                 type: Query
-                field: os_$1
+                field: os_collection
               useRegExpForFields: true
       - autoTypeMerging: true
+      # Enable Automatic Block Tracking
+      - blockTracking:
+          validateSchema: true
+      - autoPagination:
+          validateSchema: true
 
   - name: OpenSeaAPI
     handler:
@@ -273,6 +288,7 @@ transforms:
             type: Query
             field: delegation
           useRegExpForFields: true
+  - autoTypeMerging: true
 
 additionalTypeDefs:
   - ./src/type_defs.graphql
