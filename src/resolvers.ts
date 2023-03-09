@@ -42,12 +42,6 @@ const resolvers: Resolvers = {
         root, context, info, args: { id: root.id }
       })
     },
-    // asOpenseaCollection: {
-    //   selectionSet: /* GraphQL */ `{ id }`,
-    //   resolve: async (root, _args, context, info) => await context.OpenSeaSeaport.Query.os_collection({
-    //     root, context, info, args: { id: root.id }
-    //   })
-    // }
     asOpenseaContract: {
       selectionSet: /* GraphQL */ `{ id }`,
       resolve: async (root, _args, context, info) => context.OpenSeaOldAPI.Query.openseaAssetContract({
@@ -62,12 +56,6 @@ const resolvers: Resolvers = {
         root, context, info, args: { id: root.id }
       })
     },
-    // asOpenseaCollection: {
-    //   selectionSet: /* GraphQL */ `{ id }`,
-    //   resolve: async (root, _args, context, info) => await context.OpenSeaSeaport.Query.os_collection({
-    //     root, context, info, args: { id: root.id }
-    //   })
-    // }
     asOpenseaContract: {
       selectionSet: /* GraphQL */ `{ id }`,
       resolve: async (root, _args, context, info) => context.OpenSeaOldAPI.Query.openseaAssetContract({
@@ -157,13 +145,13 @@ const resolvers: Resolvers = {
   },
   OS_Collection: {
     asERC721: {
-      selectionSet: /* GraphQL */ `{ id, collectionType }`,
+      selectionSet: /* GraphQL */ `{ id }`,
       resolve: async (root, _args, context, info) => context.NFTs.Query.erc721Contract({
         root, context, info, args: { id: root.id }
       })
     },
     asERC1155: {
-      selectionSet: /* GraphQL */ `{ id, collectionType }`,
+      selectionSet: /* GraphQL */ `{ id }`,
       resolve: async (root, _args, context, info) => context.NFTs.Query.erc1155Contract({
         root, context, info, args: { id: root.id }
       })
@@ -173,7 +161,7 @@ const resolvers: Resolvers = {
       resolve: async (root, _args, context, info) => context.OpenSeaOldAPI.Query.openseaAssetContract({
         root, context, info, args: { asset_contract_address: root.id }
       })
-    },
+    }
   },
   OpenSeaAssetContract: {
     asOpenseaCollection: {
@@ -209,7 +197,7 @@ const resolvers: Resolvers = {
         })
       }
     }
-  }
+  },
   // Query: {
   //   marketplaces: async (root, _args, context, info) => {
   //     return Promise.all([

@@ -297,6 +297,8 @@ additionalResolvers:
   - ./src/resolvers.ts
 
 plugins:
+  - pollingLive:
+      defaultInterval: 10000
   - httpCache: {}
   - responseCache:
       includeExtensionMetadata: true
