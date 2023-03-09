@@ -104,57 +104,54 @@ const resolvers: Resolvers = {
     }
   },
   Collection: {
-    asERC721: {
+    asContract: {
       selectionSet: /* GraphQL */ `{ id, collectionType }`,
       resolve: async (root, _args, context, info) => {
-        if (root.collectionType != "SingleEdition") return null;
-        return context.NFTs.Query.erc721Contract({
-          root, context, info, args: { id: root.id }
-        })
-      }
-    },
-    asERC1155: {
-      selectionSet: /* GraphQL */ `{ id, collectionType }`,
-      resolve: async (root, _args, context, info) => {
-        if (root.collectionType != "MultiEdition") return null;
-        return context.NFTs.Query.erc1155Contract({
-          root, context, info, args: { id: root.id }
-        })
+        if (root.collectionType == "MultiEdition") {
+          return context.NFTs.Query.erc1155Contract({
+            root, context, info, args: { id: root.id }
+          })
+        } else if (root.collectionType == "SingleEdition") {
+          return context.NFTs.Query.erc721Contract({
+            root, context, info, args: { id: root.id }
+          })
+        }
+        return null;
       }
     }
   },
   Token: {
-    asERC721Token: {
+    asNFT: {
       selectionSet: /* GraphQL */ `{ id, collection { collectionType } }`,
       resolve: async (root, _args, context, info) => {
-        if (root.collection.collectionType != "SingleEdition") return null;
-        return context.NFTs.Query.erc721Token({
-          root, context, info, args: { id: root.id }
-        })
-      }
-    },
-    asERC1155Token: {
-      selectionSet: /* GraphQL */ `{ id, collection { collectionType } }`,
-      resolve: async (root, _args, context, info) => {
-        if (root.collection.collectionType != "MultiEdition") return null;
-        return context.NFTs.Query.erc1155Token({
-          root, context, info, args: { id: root.id }
-        })
+        if (root.collection.collectionType == "MultiEdition") {
+          return context.NFTs.Query.erc1155Token({
+            root, context, info, args: { id: root.id }
+          })
+        } else if (root.collection.collectionType == "SingleEdition") {
+          return context.NFTs.Query.erc721Token({
+            root, context, info, args: { id: root.id }
+          })
+        } 
+        return null
       }
     }
   },
   OS_Collection: {
-    asERC721: {
-      selectionSet: /* GraphQL */ `{ id }`,
-      resolve: async (root, _args, context, info) => context.NFTs.Query.erc721Contract({
-        root, context, info, args: { id: root.id }
-      })
-    },
-    asERC1155: {
-      selectionSet: /* GraphQL */ `{ id }`,
-      resolve: async (root, _args, context, info) => context.NFTs.Query.erc1155Contract({
-        root, context, info, args: { id: root.id }
-      })
+    asContract: {
+      selectionSet: /* GraphQL */ `{ id, nftStandard }`,
+      resolve: async (root, _args, context, info) => {
+        if (root.nftStandard == "ERC1155") {
+          return context.NFTs.Query.erc1155Contract({
+            root, context, info, args: { id: root.id }
+          })
+        } else if (root.nftStandard == "ERC721") {
+          return context.NFTs.Query.erc721Contract({
+            root, context, info, args: { id: root.id }
+          })
+        }
+        return null;
+      }
     },
     asOpenseaContract: {
       selectionSet: /* GraphQL */ `{ id }`,

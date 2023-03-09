@@ -1,3 +1,7 @@
+union Contract = ERC721Contract | ERC1155Contract
+
+union NFT = ERC721Token | ERC1155Token
+
 extend type Account {
   asUser: User
   openseaListings: OpenSeaListingsResponse
@@ -32,18 +36,15 @@ extend type ERC1155Token {
 }
 
 extend type Collection {
-  asERC721: ERC721Contract
-  asERC1155: ERC1155Contract
+  asContract: Contract
 }
 
 extend type Token {
-  asERC721Token: ERC721Token
-  asERC1155Token: ERC1155Token
+  asNFT: NFT
 }
 
 extend type OS_Collection {
-  asERC721: ERC721Contract
-  asERC1155: ERC1155Contract
+  asContract: Contract
   asOpenseaContract: OpenSeaAssetContract
 }
 
